@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Yayun&#39;s Studio</title>
+    <title>Python爬虫之基本原理 · Yayun&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180524 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180524 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Yayun&#39;s Studio</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Python爬虫之基本原理</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Yayun's Studio</a>
 </header>
@@ -210,24 +223,84 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Python爬虫之基本原理
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crawler">Crawler</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "HTML">HTML</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Request">Request</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Response">Response</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,407</span> / Reading time: <span class="post-count">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/06/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -327,78 +400,87 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="爬虫简介"><a href="#爬虫简介" class="headerlink" title="爬虫简介"></a><font color="#090">爬虫简介</font></h2><p><strong> 网络爬虫（Web crawler） </strong>，<code>是一种按照一定的规则，自动地抓取万维网信息的程序或者脚本</code>。它们被广泛用于互联网搜索引擎或其他类似网站，可以自动采集所有其能够访问到的页面内容，以获取或更新这些网站的内容和检索方式。从功能上来讲，爬虫一般分为数据采集，处理，储存三个部分。传统爬虫从一个或若干初始网页的URL开始，获得初始网页上的URL，在抓取网页的过程中，不断从当前页面上抽取新的URL放入队列,直到满足系统的一定停止条件。聚焦爬虫的工作流程较为复杂，需要根据一定的网页分析算法过滤与主题无关的链接，保留有用的链接并将其放入等待抓取的URL队列。然后，它将根据一定的搜索策略从队列中选择下一步要抓取的网页URL，并重复上述过程，直到达到系统的某一条件时停止。另外，所有被爬虫抓取的网页将会被系统存贮，进行一定的分析、过滤，并建立索引，以便之后的查询和检索；对于聚焦爬虫来说，这一过程所得到的分析结果还可能对以后的抓取过程给出反馈和指导。</p>
+<h2 id="爬虫原理"><a href="#爬虫原理" class="headerlink" title="爬虫原理"></a><font color="#090">爬虫原理</font></h2><p>Web网络爬虫系统的功能是下载网页数据，为搜索引擎系统提供数据来源。很多大型的网络搜索引擎系统都被称为基于 Web数据采集的搜索引擎系统，比如 Google、Baidu。由此可见Web 网络爬虫系统在搜索引擎中的重要性。网页中除了包含供用户阅读的文字信息外，还包含一些超链接信息。Web网络爬虫系统正是通过网页中的超连接信息不断获得网络上的其它网页。正是因为这种采集过程像一个爬虫或者蜘蛛在网络上漫游，所以它才被称为网络爬虫系统或者网络蜘蛛系统，在英文中称为<code>Spider</code>或者<code>Crawler</code>。</p>
+<h2 id="爬虫基本流程"><a href="#爬虫基本流程" class="headerlink" title="爬虫基本流程"></a><font color="#090">爬虫基本流程</font></h2><p><strong> &emsp;&emsp; 1. 发起请求： </strong>通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应。</p>
+<p><strong> &emsp;&emsp; 2. 获取响应内容： </strong>如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）等类型。</p>
+<p><strong> &emsp;&emsp; 3. 解析内容： </strong>得到的内容可能是HTML，可以用正则表达式、网页解析库进行解析。可能是Json，可以直接转为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理。</p>
+<p><strong> &emsp;&emsp; 4. 保存数据： </strong>保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件。</p>
+<h2 id="Request和Response"><a href="#Request和Response" class="headerlink" title="Request和Response"></a><font color="#090">Request和Response</font></h2><p><strong> Request： </strong>浏览器就发送消息给该网址所在的服务器，这个过程叫做HTTP Request。</p>
+<p><strong> Response: </strong>服务器收到浏览器发送的消息后，能够根据浏览器发送消息的内容，做相应处理，然后把消息回传给浏览器。这个过程叫做HTTP Response。浏览器收到服务器的Response信息后，会对信息进行相应处理，然后展示。</p>
+<h2 id="Request详解"><a href="#Request详解" class="headerlink" title="Request详解"></a><font color="#090">Request详解</font></h2><p><strong> 请求方式： </strong>主要有GET、POST两种类型，另外还有HEAD、PUT、DELETE、OPTIONS等。</p>
+<p><strong> 请求URL： </strong>URL全称统一资源定位符，如一个网页文档、一张图片、一个视频等都可以用URL唯一来确定。</p>
+<p><strong> 请求头： </strong>包含请求时的头部信息，如User-Agent、Host、Cookies等信息。</p>
+<p><strong> 请求体： </strong>请求时额外携带的数据如表单提交时的表单数据。</p>
+<h2 id="Response详解"><a href="#Response详解" class="headerlink" title="Response详解"></a><font color="#090">Response详解</font></h2><p><strong> 响应状态： </strong>有多种响应状态，如200代表成功、301跳转、404找不到页面、502服务器错误。</p>
+<p><strong> 响应头： </strong>如内容类型、内容长度、服务器信息、设置Cookie等等。</p>
+<p><strong> 响应体： </strong>最主要的部分，包含了请求资源的内容，如网页HTML、图片二进制数据等。</p>
+<h2 id="能抓取哪些数据"><a href="#能抓取哪些数据" class="headerlink" title="能抓取哪些数据"></a><font color="#090">能抓取哪些数据</font></h2><p><strong> 网页文本: </strong>如HTML文档、Json格式文本等。</p>
+<p><strong> 图片: </strong>获取到的是二进制文件，保存为图片格式。</p>
+<p><strong> 视频: </strong>同为二进制文件，保存为视频格式即可。</p>
+<p><strong> And so on: </strong>只要是能请求到的，都能获取。</p>
+<h2 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a><font color="#090">解析方式</font></h2><ol>
+<li><p><strong>直接处理</strong></p>
+</li>
+<li><p><strong>Json解析</strong></p>
+</li>
+<li><p><strong>正则表达式</strong></p>
+</li>
+<li><p><strong>BeautifulSoup</strong></p>
+</li>
+<li><p><strong>PyQuery</strong></p>
+</li>
+<li><p><strong>XPath</strong></p>
+</li>
+</ol>
+<h2 id="抓取中出现的问题"><a href="#抓取中出现的问题" class="headerlink" title="抓取中出现的问题"></a><font color="#090">抓取中出现的问题</font></h2><p><strong> 问：</strong>为什么我抓到的和浏览器看到的不一样？</p>
+<p><strong> 答：</strong>网页通过浏览器的解析，加载CSS与JS等文件对网页进行解析渲染，达到我们看到绚丽的网页，而我们抓到的文件只是一些代码，css文件无法调用，使得样式不能表现出来，那么网页就会出现错位等等问题。</p>
+<p><strong> 问：</strong>怎样解决JavaScript渲染的问题？</p>
+<p><strong> 答：</strong>分析Ajax请求、Selenium/WebDriver、Splash、PyV8、Ghost.py等库</p>
+<h2 id="保存数据"><a href="#保存数据" class="headerlink" title="保存数据"></a><font color="#090">保存数据</font></h2><p><strong> 文本： </strong>纯文本、Json、Xml等。</p>
+<p><strong> 关系型数据库： </strong><font face="fantasy">如MySQL、Oracle、SQL Server等具有结构化表结构形式存储。</font></p>
+<p><strong> 非关系型数据库： </strong> <font face="微软雅黑">如MongoDB、Redis等Key-Value形式存储。</font></p>
+<p><strong> 二进制文件： </strong>如图片、视频、音频等等直接保存成特定格式即可。</p>
+
+    </article>
+    <!-- license  -->
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/06/PythonCrawler/" >
-                
-                    <span>Python爬虫之基本原理</span>
-            </a>
-            <div class="abstract-content">
-                爬虫简介 网络爬虫（Web crawler） ，是一种按照一定的规则，自动地抓取万维网信息的程序或者脚本。它们被广泛用于互联网搜索引擎或其他类似网站，可以自动采集所有其能够访问到的页面内容，以获取或更新这些网站的内容和检索方式。从功能上来讲，爬虫一般分为数据采集，处理，储存三个部分。传统爬虫从一个或若干初始网页的URL开始，获得初始网页上的URL，在抓取网页的过程中，不断从当前页面上抽取新的URL放入队列,直到满足系统的一定停止条件。聚焦爬虫的工作流程较为复杂，需要根据一定的网页分析算法过滤与主题无关的链接，保留有用的链接并将其放入等待抓取的URL队列。然后，它将根据一定的搜索策略从队列...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crawler">Crawler</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "HTML">HTML</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Request">Request</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Response">Response</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/30/hello-world/" >
-                
-                    <span>Hello World</span>
-            </a>
-            <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "hello">hello</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "start">start</a>
-    
-</div>
-                
-            </div>
-        </article>
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://yayun.site">Yayun</a>
+            <p>原文链接: <a href="http://yayun.site/2018/06/06/PythonCrawler/">http://yayun.site/2018/06/06/PythonCrawler/</a>
+            <p>发表日期: <a href="http://yayun.site/2018/06/06/PythonCrawler/">June 6th 2018, 7:26:37</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/30/hello-world/" title= Hello World >
+                    <div class="prevTitle">Hello World</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -475,6 +557,24 @@ More...
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫简介"><span class="toc-number">1.</span> <span class="toc-text">爬虫简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫原理"><span class="toc-number">2.</span> <span class="toc-text">爬虫原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬虫基本流程"><span class="toc-number">3.</span> <span class="toc-text">爬虫基本流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request和Response"><span class="toc-number">4.</span> <span class="toc-text">Request和Response</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request详解"><span class="toc-number">5.</span> <span class="toc-text">Request详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Response详解"><span class="toc-number">6.</span> <span class="toc-text">Response详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#能抓取哪些数据"><span class="toc-number">7.</span> <span class="toc-text">能抓取哪些数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析方式"><span class="toc-number">8.</span> <span class="toc-text">解析方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抓取中出现的问题"><span class="toc-number">9.</span> <span class="toc-text">抓取中出现的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存数据"><span class="toc-number">10.</span> <span class="toc-text">保存数据</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -608,6 +708,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
