@@ -124,10 +124,47 @@
     <!--这里写名字❤！！！-->
     <canvas id="pinkboard"></canvas>
     <!-- <canvas id= "canvas"></canvas>  -->
+
+	<div id="player">
+		<audio id="audios" autoplay loop preload src="./static/music/Taylor Swift - Enchanted.mp3">
+	<div>
+
+	<script type="text/javascript" src="./static/js/autoPlayAudio.js" ></script>
+
     <script>
-        /*
-       * Settings
-       */
+    	var apas = new autoPlayAudios();
+	    apas.play();
+
+		var audio = document.getElementById('audios');
+		function audioAutoPlay(audio){
+			play = function(){
+				audio.play();
+				document.removeEventListener("touchstart",play, false);
+			};
+			audio.play();
+			document.addEventListener("WeixinJSBridgeReady", function () {
+				play();
+			}, false);
+			document.addEventListener('YixinJSBridgeReady', function() {
+				play();
+			}, false);
+			document.addEventListener("touchstart",play, false);
+		}
+		//每隔2秒检测是否播放音乐,播放则停止定时器
+		let t = setInterval(() => {
+			if(audio.paused === false){
+				console.log('停止定时器');
+				clearInterval(t);
+			}else{
+				console.log('执行定时器');
+				audioAutoPlay(audio);
+			}
+		},2000);
+
+
+	    /*
+	     * Settings
+	     */
         var settings = {
             particles: {
                 length: 500, // maximum amount of particles
