@@ -17,7 +17,22 @@ var autoPlayAudios = function(){
 		}else{ 
 			return false; 
 		} 
-	} 
+	}
+
+	//判断是否pc端
+    autoPlayAudios.isPc = function(){ 
+    	// alert(navigator.userAgent);
+		if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		    // window.location.href ="iPhone.html";
+		    return false;
+		} else if (/(Android)/i.test(navigator.userAgent)) {
+		    // window.location.href ="Android.html";
+		    return false;
+		} else {
+		    // window.location.href ="pc.html";
+		    return true;
+		};
+	}
 	
 	//微信配置信息
 	autoPlayAudios.autoPlayAudio = function() {
@@ -47,7 +62,7 @@ var autoPlayAudios = function(){
 	autoPlayAudios.play = function(){
 		window.addEventListener('DOMContentLoaded',function(){
 			//判断是否通过微信浏览器打开
-//			alert(autoPlayAudios.isWeiXin());
+			console.log("Is weixin: " + autoPlayAudios.isWeiXin());
 			if(autoPlayAudios.isWeiXin()){
 				var script = document.createElement('script');
 				script.src = "http://res.wx.qq.com/open/js/jweixin-1.6.0.js";
@@ -58,10 +73,31 @@ var autoPlayAudios = function(){
 			}else{
 				//解决浏览器不会自动播放音乐
 				var touchStartPlay = true;
+				var audio = document.getElementById('audios');
+
 				window.addEventListener('touchstart',function(){
 					if(touchStartPlay){
-						touchStartPlay = false;
 						autoPlayAudios.autoPlay();
+						if(audio.paused === false) {
+							touchStartPlay = false;
+						}
+
+					}
+				},false);
+				window.addEventListener('mouseover',function(){
+					if(touchStartPlay){
+						autoPlayAudios.autoPlay();
+						if(audio.paused === false) {
+							touchStartPlay = false;
+						}
+					}
+				},false)
+				window.addEventListener('click',function(){
+					if(touchStartPlay){
+						autoPlayAudios.autoPlay();
+						if(audio.paused === false) {
+							touchStartPlay = false;
+						}
 					}
 				},false)
 			}
