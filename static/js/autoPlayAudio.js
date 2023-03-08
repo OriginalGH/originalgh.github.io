@@ -50,7 +50,7 @@ var autoPlayAudios = function(){
 //			alert(autoPlayAudios.isWeiXin());
 			if(autoPlayAudios.isWeiXin()){
 				var script = document.createElement('script');
-				script.src = "http://res.wx.qq.com/open/js/jweixin-1.0.0.js";
+				script.src = "http://res.wx.qq.com/open/js/jweixin-1.6.0.js";
 				script.onload = function(){
 					autoPlayAudios.autoPlayAudio();
 				}

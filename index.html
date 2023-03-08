@@ -129,37 +129,57 @@
 		<audio id="audios" autoplay loop preload src="./static/music/Taylor Swift - Enchanted.mp3">
 	<div>
 
-	<script type="text/javascript" src="./static/js/autoPlayAudio.js" ></script>
+	<!-- <script type="text/javascript" src="./static/js/autoPlayAudio.js" ></script> -->
+
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+
 
     <script>
-    	var apas = new autoPlayAudios();
-	    apas.play();
+    	// var apas = new autoPlayAudios();
+	    // apas.play();
 
-		var audio = document.getElementById('audios');
-		function audioAutoPlay(audio){
-			play = function(){
-				audio.play();
-				document.removeEventListener("touchstart",play, false);
-			};
-			audio.play();
-			document.addEventListener("WeixinJSBridgeReady", function () {
-				play();
-			}, false);
-			document.addEventListener('YixinJSBridgeReady', function() {
-				play();
-			}, false);
-			document.addEventListener("touchstart",play, false);
-		}
-		//每隔2秒检测是否播放音乐,播放则停止定时器
-		let t = setInterval(() => {
-			if(audio.paused === false){
-				console.log('停止定时器');
-				clearInterval(t);
-			}else{
-				console.log('执行定时器');
-				audioAutoPlay(audio);
-			}
-		},2000);
+        // 微信配置信息 即使不正确也没问题，但是一定要有这一步
+	    wx.config({
+	        debug: false,
+	        appId: '',
+	        timestamp: 1,
+	        nonceStr: '',
+	        signature: '',
+	        jsApiList: [],
+	    });
+
+	    // 在ready时触发相关事件
+	    wx.ready(function() {
+	        // 播放背景音乐
+	        var bgMusic = document.getElementById('audios');
+	        bgMusic.play();
+	    });
+
+		// var audio = document.getElementById('audios');
+		// function audioAutoPlay(audio){
+		// 	play = function(){
+		// 		audio.play();
+		// 		document.removeEventListener("touchstart",play, false);
+		// 	};
+		// 	audio.play();
+		// 	document.addEventListener("WeixinJSBridgeReady", function () {
+		// 		play();
+		// 	}, false);
+		// 	document.addEventListener('YixinJSBridgeReady', function() {
+		// 		play();
+		// 	}, false);
+		// 	document.addEventListener("touchstart",play, false);
+		// }
+		// //每隔2秒检测是否播放音乐,播放则停止定时器
+		// let t = setInterval(() => {
+		// 	if(audio.paused === false){
+		// 		console.log('停止定时器');
+		// 		clearInterval(t);
+		// 	}else{
+		// 		console.log('执行定时器');
+		// 		audioAutoPlay(audio);
+		// 	}
+		// },2000);
 
 
 	    /*
