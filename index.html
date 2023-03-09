@@ -126,8 +126,8 @@
     <!-- <canvas id= "canvas"></canvas>  -->
 
 	<div id="player">
-		<audio id="audios" autoplay loop preload src="./static/music/Taylor Swift - Enchanted.mp3" />
-		<button id="myButton" style="display: none"></button>
+		<audio id="audios" loop preload=auto src="./static/music/Taylor Swift - Enchanted.mp3" />
+		
 	<div>
 
 	<script type="text/javascript" src="./static/js/autoPlayAudio.js"></script>
@@ -136,6 +136,17 @@
 
 
     <script>
+
+window.addEventListener('load', () => {
+  document.queryselector('#audios').load();
+});
+document.addEventListener('WeixinJSBridgeReady', function() {
+  document.getElementById('audios').play()
+});
+document.addEventListener('touchstart', function() {
+  document.getElementById('audios').play()
+});
+
     	var apas = new autoPlayAudios();
 	    apas.play();
 
