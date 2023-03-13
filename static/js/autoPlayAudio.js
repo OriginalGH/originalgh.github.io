@@ -21,7 +21,7 @@ var autoPlayAudios = function(){
 
 	//判断是否pc端
     autoPlayAudios.isPc = function(){ 
-    	// alert(navigator.userAgent);
+    	console.log(navigator.userAgent);
 		if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 		    // window.location.href ="iPhone.html";
 		    return false;
@@ -78,7 +78,9 @@ var autoPlayAudios = function(){
 				//解决浏览器不会自动播放音乐
 				var touchStartPlay = true;
 				var audio = document.getElementById('audios');
-
+				if (autoPlayAudios.isPc()) {
+					audio.setAttribute("autoplay","autoplay");
+				}
 				window.addEventListener('touchstart',function(){
 					if(touchStartPlay){
 						autoPlayAudios.autoPlay();

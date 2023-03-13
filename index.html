@@ -133,26 +133,27 @@
 	<script type="text/javascript" src="./static/js/autoPlayAudio.js"></script>
 
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-<script>
-  // VConsole will be exported to `window.VConsole` by default.
-  // var vConsole = new window.VConsole();
-</script>
+
+	<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+	<script>
+	  // VConsole will be exported to `window.VConsole` by default.
+	  // var vConsole = new window.VConsole();
+	</script>
 
     <script>
 
-window.addEventListener('load', () => {
-  document.queryselector('#audios').load();
-console.log("load");
-});
-document.addEventListener('WeixinJSBridgeReady', function() {
-  document.getElementById('audios').play();
-console.log("wx ready play");
-});
-document.addEventListener('touchstart', function() {
-  document.getElementById('audios').play();
-console.log("touch play");
-});
+		window.addEventListener('load', () => {
+		  document.querySelector('#audios').load();
+		console.log("load");
+		});
+		document.addEventListener('WeixinJSBridgeReady', function() {
+		  document.getElementById('audios').play();
+		console.log("wx ready play");
+		});
+		document.addEventListener('touchstart', function() {
+		  document.getElementById('audios').play();
+		console.log("touch play");
+		});
 
     	var apas = new autoPlayAudios();
 	    apas.play();
